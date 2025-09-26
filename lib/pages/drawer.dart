@@ -1,5 +1,8 @@
 import 'package:flutter/material.dart';
 
+import 'entretien.dart';
+import 'home_page.dart';
+
 class MyDrawer extends StatelessWidget {
   const MyDrawer({super.key});
 
@@ -17,6 +20,16 @@ class MyDrawer extends StatelessWidget {
             title: const Text("Home"),
             onTap: () {
               Navigator.pop(context);
+            },
+          ),
+          ListTile(
+            leading: const Icon(Icons.water_drop),
+            title: const Text("Bien entretenir ces plantes d'intérieur"),
+            onTap: () {
+              Navigator.push(
+                context,
+                MaterialPageRoute(builder: (context) => EntretienPage()),
+              );
             },
           ),
           const ListTile(
