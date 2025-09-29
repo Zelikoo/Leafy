@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 
-import 'entretien.dart';
-import 'home_page.dart';
+import '../pages/entretien.dart';
+import '../pages/home_page.dart';
 
 class MyDrawer extends StatelessWidget {
   const MyDrawer({super.key});
