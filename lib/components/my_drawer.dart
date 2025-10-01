@@ -19,17 +19,22 @@ class MyDrawer extends StatelessWidget {
             leading: const Icon(Icons.home),
             title: const Text("Home"),
             onTap: () {
-              Navigator.pop(context);
+              if (ModalRoute.of(context)?.settings.name == '/') {
+                return Navigator.pop(context);
+              } else {
+                Navigator.pushNamed(context, '/');
+              }
             },
           ),
           ListTile(
             leading: const Icon(Icons.water_drop),
             title: const Text("Bien entretenir ces plantes d'intérieur"),
             onTap: () {
-              Navigator.push(
-                context,
-                MaterialPageRoute(builder: (context) => EntretienPage()),
-              );
+              if (ModalRoute.of(context)?.settings.name == '/entretien') {
+                return Navigator.pop(context);
+              } else {
+                Navigator.pushNamed(context, '/entretien');
+              }
             },
           ),
           const ListTile(

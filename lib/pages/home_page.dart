@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import '../components/my_drawer.dart';
+import '../class/produit.dart';
 
 class HomePage extends StatefulWidget {
   const HomePage({super.key});
@@ -9,11 +10,37 @@ class HomePage extends StatefulWidget {
 }
 
 class _HomePageState extends State<HomePage> {
-  List flowerList = ["bonsai", "daisy", "rose", "tulip"];
-  List categoryList = [
+  List<Produit> flowerList = [
+    Produit(
+      urlImg: "assets/images/bonsai.jpg",
+      name: "Bonsai",
+      price: 20.0,
+      description: "Petite plante",
+    ),
+    Produit(
+      urlImg: "assets/images/daisy.jpg",
+      name: "Daisy",
+      price: 15.0,
+      description: "Petite plante",
+    ),
+    Produit(
+      urlImg: "assets/images/rose.jpg",
+      name: "Rose",
+      price: 10.0,
+      description: "Petite plante",
+    ),
+    Produit(
+      urlImg: "assets/images/tulip.jpg",
+      name: "Tulip",
+      price: 15.0,
+      description: "Petite plante",
+    ),
+  ];
+
+  List<String> categoryList = [
     "Petite plante",
     "Moyenne plante",
-    "Terratium",
+    "Terrarium",
     "Pot / Accessoire",
   ];
 
@@ -77,8 +104,7 @@ class _HomePageState extends State<HomePage> {
                       foregroundColor: Colors.white,
                       backgroundColor: index == numCategory
                           ? Colors.teal.shade800
-                          : Colors.teal,
-
+                          : Colors.teal.shade400,
                       shape: RoundedRectangleBorder(
                         borderRadius: BorderRadius.circular(5),
                       ),
@@ -105,11 +131,11 @@ class _HomePageState extends State<HomePage> {
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    Image.asset("assets/images/bonsai.jpg"),
+                    Image.asset(flowerList[index].urlImg, height: 200),
                     Padding(
                       padding: const EdgeInsets.all(8.0),
                       child: Text(
-                        flowerList[index],
+                        flowerList[index].name,
                         textAlign: TextAlign.start,
                         style: TextStyle(
                           color: Colors.black,
@@ -121,7 +147,7 @@ class _HomePageState extends State<HomePage> {
                     Padding(
                       padding: const EdgeInsets.fromLTRB(8, 0, 0, 8),
                       child: Text(
-                        "DE 20,00 €",
+                        "DE ${flowerList[index].price} €",
                         textAlign: TextAlign.start,
                         style: TextStyle(color: Colors.black, fontSize: 15),
                       ),
