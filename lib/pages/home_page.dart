@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import '../components/my_drawer.dart';
 import '../class/produit.dart';
+import '../components/my_bottom_nav.dart';
 
 class HomePage extends StatefulWidget {
   const HomePage({super.key});
@@ -54,27 +55,22 @@ class _HomePageState extends State<HomePage> {
       appBar: AppBar(
         backgroundColor: const Color(0xfffaf2e4),
         title: Row(
-          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+          mainAxisAlignment: MainAxisAlignment.start,
           children: [
-            Row(
-              children: [
-                Image(
-                  image: AssetImage("assets/images/leafy.png"),
-                  width: 40,
-                  height: 40,
-                ),
-                const SizedBox(width: 10),
-                Text(
-                  "Leafy",
-                  style: TextStyle(
-                    fontFamily: 'AlexBrush',
-                    fontSize: 50,
-                    color: Color(0xff097782),
-                  ),
-                ),
-              ],
+            Image(
+              image: AssetImage("assets/images/leafy.png"),
+              width: 40,
+              height: 40,
             ),
-            Icon(Icons.shopping_cart_outlined, color: Colors.black, size: 30),
+            const SizedBox(width: 10),
+            Text(
+              "Leafy",
+              style: TextStyle(
+                fontFamily: 'AlexBrush',
+                fontSize: 50,
+                color: Color(0xff097782),
+              ),
+            ),
           ],
         ),
       ),
@@ -157,6 +153,7 @@ class _HomePageState extends State<HomePage> {
               },
             ),
           ),
+          MyBottomNav(),
         ],
       ),
     );
