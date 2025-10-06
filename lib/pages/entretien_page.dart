@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-import '../components/my_bottom_nav.dart';
 import '../components/my_drawer.dart';
+import '../components/my_appbar.dart';
 
 class EntretienPage extends StatelessWidget {
   const EntretienPage({super.key});
@@ -10,32 +10,7 @@ class EntretienPage extends StatelessWidget {
     return Scaffold(
       backgroundColor: Color(0xfffaf2e4),
       drawer: MyDrawer(),
-      appBar: AppBar(
-        backgroundColor: const Color(0xfffaf2e4),
-        title: Row(
-          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-          children: [
-            Row(
-              children: [
-                Image(
-                  image: AssetImage("assets/images/leafy.png"),
-                  width: 40,
-                  height: 40,
-                ),
-                const SizedBox(width: 10),
-                Text(
-                  "Leafy",
-                  style: TextStyle(
-                    fontFamily: 'AlexBrush',
-                    fontSize: 50,
-                    color: Color(0xff097782),
-                  ),
-                ),
-              ],
-            ),
-          ],
-        ),
-      ),
+      appBar: My_AppBar(),
       body: SingleChildScrollView(
         child: Container(
           margin: EdgeInsets.all(15),
@@ -118,7 +93,6 @@ class EntretienPage extends StatelessWidget {
           ),
         ),
       ),
-      bottomNavigationBar: MyBottomNav(),
     );
   }
 }

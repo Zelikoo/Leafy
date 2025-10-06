@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import '../components/my_drawer.dart';
 import '../class/produit.dart';
-import '../components/my_bottom_nav.dart';
+import '../components/my_appbar.dart';
 
 class HomePage extends StatefulWidget {
   const HomePage({super.key});
@@ -51,39 +51,20 @@ class _HomePageState extends State<HomePage> {
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: Colors.white,
-      drawer: MyDrawer(),
-      appBar: AppBar(
-        backgroundColor: const Color(0xfffaf2e4),
-        title: Row(
-          mainAxisAlignment: MainAxisAlignment.start,
-          children: [
-            Image(
-              image: AssetImage("assets/images/leafy.png"),
-              width: 40,
-              height: 40,
-            ),
-            const SizedBox(width: 10),
-            Text(
-              "Leafy",
-              style: TextStyle(
-                fontFamily: 'AlexBrush',
-                fontSize: 50,
-                color: Color(0xff097782),
-              ),
-            ),
-          ],
-        ),
-      ),
+      drawer: const MyDrawer(),
+      appBar: My_AppBar(),
+
       body: Column(
         children: [
-          Expanded(
-            flex: 1,
+          // Catégories horizontales
+          SizedBox(
+            height: 70,
             child: Container(
-              margin: EdgeInsets.all(10),
+              margin: const EdgeInsets.all(10),
               child: GridView.builder(
                 itemCount: categoryList.length,
                 scrollDirection: Axis.horizontal,
-                gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+                gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
                   crossAxisCount: 1,
                   crossAxisSpacing: 0.5,
                   mainAxisSpacing: 5,
@@ -111,29 +92,30 @@ class _HomePageState extends State<HomePage> {
               ),
             ),
           ),
+
+          // Liste de produits
           Expanded(
-            flex: 9,
             child: GridView.builder(
               itemCount: flowerList.length,
-              padding: EdgeInsets.all(5.0),
-              gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+              padding: const EdgeInsets.all(5.0),
+              gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
                 crossAxisCount: 2,
                 childAspectRatio: 0.7,
                 crossAxisSpacing: 5.0,
                 mainAxisSpacing: 5.0,
               ),
               itemBuilder: (context, index) {
+                final produit = flowerList[index];
                 return Column(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    Image.asset(flowerList[index].urlImg, height: 200),
+                    Image.asset(produit.urlImg, height: 200),
                     Padding(
                       padding: const EdgeInsets.all(8.0),
                       child: Text(
-                        flowerList[index].name,
-                        textAlign: TextAlign.start,
-                        style: TextStyle(
+                        produit.name,
+                        style: const TextStyle(
                           color: Colors.black,
                           fontSize: 25,
                           fontWeight: FontWeight.bold,
@@ -143,9 +125,11 @@ class _HomePageState extends State<HomePage> {
                     Padding(
                       padding: const EdgeInsets.fromLTRB(8, 0, 0, 8),
                       child: Text(
-                        "DE ${flowerList[index].price} €",
-                        textAlign: TextAlign.start,
-                        style: TextStyle(color: Colors.black, fontSize: 15),
+                        "DE ${produit.price} €",
+                        style: const TextStyle(
+                          color: Colors.black,
+                          fontSize: 15,
+                        ),
                       ),
                     ),
                   ],
@@ -153,7 +137,6 @@ class _HomePageState extends State<HomePage> {
               },
             ),
           ),
-          MyBottomNav(),
         ],
       ),
     );
