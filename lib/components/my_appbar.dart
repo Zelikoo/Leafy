@@ -13,10 +13,13 @@ class My_AppBar extends StatelessWidget implements PreferredSizeWidget {
       title: Row(
         mainAxisAlignment: MainAxisAlignment.start,
         children: [
-          Image(
-            image: AssetImage("assets/images/leafy.png"),
-            width: 40,
-            height: 40,
+          Hero(
+            tag: 'logo',
+            child: Image(
+              image: AssetImage("assets/images/leafy.png"),
+              width: 40,
+              height: 40,
+            ),
           ),
           const SizedBox(width: 10),
           Text(

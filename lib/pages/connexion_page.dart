@@ -5,6 +5,20 @@ class ConnexionPage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return const Placeholder();
+    return Scaffold(
+      body: Column(
+        mainAxisAlignment: MainAxisAlignment.center,
+        children: [
+          Hero(
+            tag: 'logo',
+            child: Image(
+              image: AssetImage("assets/images/leafy.png"),
+              width: 40,
+              height: 40,
+            ),
+          ),
+        ],
+      ),
+    );
   }
 }
