@@ -59,19 +59,16 @@ class _HomePageState extends State<HomePage> {
           // Catégories horizontales
           SizedBox(
             height: 70,
-            child: Container(
-              margin: const EdgeInsets.all(10),
-              child: GridView.builder(
-                itemCount: categoryList.length,
-                scrollDirection: Axis.horizontal,
-                gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
-                  crossAxisCount: 1,
-                  crossAxisSpacing: 0.5,
-                  mainAxisSpacing: 5,
-                  childAspectRatio: 0.5,
-                ),
-                itemBuilder: (BuildContext context, int index) {
-                  return TextButton(
+            child: ListView.builder(
+              scrollDirection: Axis.horizontal,
+              itemCount: categoryList.length,
+              itemBuilder: (context, index) {
+                return Container(
+                  margin: const EdgeInsets.symmetric(
+                    horizontal: 5,
+                    vertical: 10,
+                  ),
+                  child: TextButton(
                     onPressed: () {
                       setState(() {
                         numCategory = index;
@@ -82,14 +79,18 @@ class _HomePageState extends State<HomePage> {
                       backgroundColor: index == numCategory
                           ? Colors.teal.shade800
                           : Colors.teal.shade400,
+                      padding: const EdgeInsets.symmetric(horizontal: 16),
                       shape: RoundedRectangleBorder(
                         borderRadius: BorderRadius.circular(5),
                       ),
                     ),
-                    child: Text(categoryList[index]),
-                  );
-                },
-              ),
+                    child: Text(
+                      categoryList[index],
+                      style: const TextStyle(fontSize: 14),
+                    ),
+                  ),
+                );
+              },
             ),
           ),
 
