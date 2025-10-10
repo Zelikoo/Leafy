@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import '../services/facebook_auth.dart';
+import '../services/google_auth.dart';
 
 class ProfilPage extends StatefulWidget {
   const ProfilPage({super.key});
@@ -11,6 +13,9 @@ class _ProfilPageState extends State<ProfilPage> {
   late bool passwordVisible = false;
   late String email = '';
   late String password = '';
+
+  final FacebookAuthService _facebookAuthService = FacebookAuthService();
+  final GoogleAuthService _googleAuthService = GoogleAuthService();
 
   @override
   Widget build(BuildContext context) {
@@ -163,60 +168,72 @@ class _ProfilPageState extends State<ProfilPage> {
                 Row(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
-                    TextButton(
-                      onPressed: () {
-                        print('connexion facebook');
-                      },
-                      style: TextButton.styleFrom(
-                        padding: EdgeInsets.symmetric(
-                          horizontal: 20,
-                          vertical: 10,
-                        ),
+                    ElevatedButton.icon(
+                      icon: Icon(Icons.facebook, color: Colors.white, size: 20),
+                      label: const Text(
+                        'Facebook',
+                        style: TextStyle(fontSize: 15),
+                      ),
+                      style: ElevatedButton.styleFrom(
+                        foregroundColor: Colors.white,
                         backgroundColor: Colors.blue,
                         shape: RoundedRectangleBorder(
                           borderRadius: BorderRadius.circular(30),
                         ),
                       ),
-                      child: Row(
-                        children: [
-                          Icon(Icons.facebook, color: Colors.white, size: 25),
-                          SizedBox(width: 10),
-                          Text(
-                            "Facebook",
-                            style: TextStyle(color: Colors.white, fontSize: 15),
-                          ),
-                        ],
-                      ),
+                      onPressed: () async {
+                        final userData = await _facebookAuthService
+                            .signInWithFacebook();
+                        if (userData != null) {
+                          ScaffoldMessenger.of(context).showSnackBar(
+                            const SnackBar(
+                              content: Text('Connexion réussie ✅'),
+                            ),
+                          );
+                        } else {
+                          ScaffoldMessenger.of(context).showSnackBar(
+                            const SnackBar(
+                              content: Text('Échec de connexion ❌'),
+                            ),
+                          );
+                        }
+                      },
                     ),
                     SizedBox(width: 20),
-                    TextButton(
-                      onPressed: () {
-                        print('connexion google');
-                      },
-                      style: TextButton.styleFrom(
-                        padding: EdgeInsets.symmetric(
-                          horizontal: 20,
-                          vertical: 10,
-                        ),
+                    ElevatedButton.icon(
+                      icon: Icon(
+                        Icons.g_mobiledata,
+                        color: Colors.white,
+                        size: 25,
+                      ),
+                      label: const Text(
+                        'Google',
+                        style: TextStyle(fontSize: 15),
+                      ),
+                      style: ElevatedButton.styleFrom(
+                        foregroundColor: Colors.white,
                         backgroundColor: Colors.red,
                         shape: RoundedRectangleBorder(
                           borderRadius: BorderRadius.circular(30),
                         ),
                       ),
-                      child: Row(
-                        children: [
-                          Icon(
-                            Icons.g_mobiledata,
-                            color: Colors.white,
-                            size: 25,
-                          ),
-                          SizedBox(width: 10),
-                          Text(
-                            "Google",
-                            style: TextStyle(color: Colors.white, fontSize: 15),
-                          ),
-                        ],
-                      ),
+                      onPressed: () async {
+                        final userData =
+                            await GoogleAuthService.signInWithGoogle();
+                        if (userData != null) {
+                          ScaffoldMessenger.of(context).showSnackBar(
+                            const SnackBar(
+                              content: Text('Connexion réussie ✅'),
+                            ),
+                          );
+                        } else {
+                          ScaffoldMessenger.of(context).showSnackBar(
+                            const SnackBar(
+                              content: Text('Échec de connexion ❌'),
+                            ),
+                          );
+                        }
+                      },
                     ),
                   ],
                 ),

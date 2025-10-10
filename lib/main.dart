@@ -28,6 +28,7 @@ class MyApp extends StatelessWidget {
         '/connexion': (context) => const ConnexionPage(),
       },
       theme: ThemeData(),
+      debugShowCheckedModeBanner: false,
     );
   }
 }
