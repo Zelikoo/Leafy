@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import '../components/my_drawer.dart';
 import '../class/produit.dart';
 import '../components/my_appbar.dart';
+import 'detail_page.dart';
 
 class HomePage extends StatefulWidget {
   const HomePage({super.key});
@@ -15,25 +16,25 @@ class _HomePageState extends State<HomePage> {
     Produit(
       urlImg: "assets/images/bonsai.jpg",
       name: "Bonsai",
-      price: 20.0,
+      price: 20.00,
       description: "Petite plante",
     ),
     Produit(
       urlImg: "assets/images/daisy.jpg",
       name: "Daisy",
-      price: 15.0,
+      price: 15.00,
       description: "Petite plante",
     ),
     Produit(
       urlImg: "assets/images/rose.jpg",
       name: "Rose",
-      price: 10.0,
+      price: 10.00,
       description: "Petite plante",
     ),
     Produit(
       urlImg: "assets/images/tulip.jpg",
       name: "Tulip",
-      price: 15.0,
+      price: 15.00,
       description: "Petite plante",
     ),
   ];
@@ -52,7 +53,7 @@ class _HomePageState extends State<HomePage> {
     return Scaffold(
       backgroundColor: Colors.white,
       drawer: const MyDrawer(),
-      appBar: My_AppBar(),
+      appBar: MyAppBar(),
 
       body: Column(
         children: [
@@ -107,33 +108,46 @@ class _HomePageState extends State<HomePage> {
               ),
               itemBuilder: (context, index) {
                 final produit = flowerList[index];
-                return Column(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    Image.asset(produit.urlImg, height: 200),
-                    Padding(
-                      padding: const EdgeInsets.all(8.0),
-                      child: Text(
-                        produit.name,
-                        style: const TextStyle(
-                          color: Colors.black,
-                          fontSize: 25,
-                          fontWeight: FontWeight.bold,
-                        ),
+                return GestureDetector(
+                  onTap: () {
+                    Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                        builder: (context) => DetailPage(produit: produit),
                       ),
-                    ),
-                    Padding(
-                      padding: const EdgeInsets.fromLTRB(8, 0, 0, 8),
-                      child: Text(
-                        "DE ${produit.price} €",
-                        style: const TextStyle(
-                          color: Colors.black,
-                          fontSize: 15,
+                    );
+                  },
+                  child: Container(
+                    decoration: BoxDecoration(color: Colors.grey.shade50),
+                    child: Column(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        Center(child: Image.asset(produit.urlImg, height: 200)),
+                        Padding(
+                          padding: const EdgeInsets.all(8.0),
+                          child: Text(
+                            produit.name,
+                            style: const TextStyle(
+                              color: Colors.black,
+                              fontSize: 25,
+                              fontWeight: FontWeight.bold,
+                            ),
+                          ),
                         ),
-                      ),
+                        Padding(
+                          padding: const EdgeInsets.fromLTRB(8, 0, 0, 8),
+                          child: Text(
+                            "${produit.price} €",
+                            style: const TextStyle(
+                              color: Colors.black,
+                              fontSize: 15,
+                            ),
+                          ),
+                        ),
+                      ],
                     ),
-                  ],
+                  ),
                 );
               },
             ),

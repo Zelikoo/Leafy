@@ -10,7 +10,7 @@ class EntretienPage extends StatelessWidget {
     return Scaffold(
       backgroundColor: Color(0xfffaf2e4),
       drawer: MyDrawer(),
-      appBar: My_AppBar(),
+      appBar: MyAppBar(),
       body: SingleChildScrollView(
         child: Container(
           margin: EdgeInsets.all(15),

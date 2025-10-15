@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 
-class My_AppBar extends StatelessWidget implements PreferredSizeWidget {
-  const My_AppBar({super.key});
+class MyAppBar extends StatelessWidget implements PreferredSizeWidget {
+  const MyAppBar({super.key});
 
   @override
   Size get preferredSize => Size.fromHeight(kTextTabBarHeight);
