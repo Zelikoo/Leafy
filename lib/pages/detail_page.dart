@@ -31,7 +31,6 @@ class _DetailPageState extends State<DetailPage> {
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              // Nom du produit
               Text(
                 widget.produit.name,
                 style: const TextStyle(
@@ -41,7 +40,6 @@ class _DetailPageState extends State<DetailPage> {
                 ),
               ),
 
-              // Prix aligné à droite
               SizedBox(
                 width: double.infinity,
                 child: Text(
@@ -57,7 +55,6 @@ class _DetailPageState extends State<DetailPage> {
 
               const SizedBox(height: 10),
 
-              // Image du produit
               Center(
                 child: Image.asset(
                   widget.produit.urlImg,
@@ -69,7 +66,6 @@ class _DetailPageState extends State<DetailPage> {
 
               const SizedBox(height: 20),
 
-              // Sélecteur de quantité
               Container(
                 decoration: BoxDecoration(
                   color: Colors.teal.shade800,
@@ -128,7 +124,7 @@ class _DetailPageState extends State<DetailPage> {
                     const SizedBox(width: 10),
                     const Text(
                       "Ajouter au panier",
-                      style: TextStyle(color: Colors.white),
+                      style: TextStyle(color: Colors.white, fontSize: 20),
                     ),
                   ],
                 ),
