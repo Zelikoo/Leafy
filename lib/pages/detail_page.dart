@@ -12,7 +12,7 @@ class DetailPage extends StatefulWidget {
 }
 
 class _DetailPageState extends State<DetailPage> {
-  int quantity = 1; // ✅ On la place ici, au niveau de l'état
+  int quantity = 1;
 
   @override
   Widget build(BuildContext context) {
@@ -119,6 +119,7 @@ class _DetailPageState extends State<DetailPage> {
                   ),
                 ),
                 child: Row(
+                  mainAxisAlignment: MainAxisAlignment.center,
                   children: [
                     const Icon(Icons.shopping_cart, color: Colors.white),
                     const SizedBox(width: 10),
