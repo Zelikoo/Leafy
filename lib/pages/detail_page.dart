@@ -140,9 +140,7 @@ class _DetailPageState extends State<DetailPage> {
                 ),
               ),
               const SizedBox(height: 10),
-              Text(
-                'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Aenean sollicitudin justo sit amet enim porta, eget aliquet leo aliquam. Phasellus tincidunt, eros a ornare sagittis, ante sem facilisis velit, facilisis ultricies lacus nisl sed orci. Vivamus quis est vitae dui dignissim scelerisque nec sed nunc. Curabitur fermentum, augue id sollicitudin maximus, lorem lectus luctus eros, eu ultricies mauris arcu nec est. Pellentesque sit amet egestas turpis, sed rutrum velit. Maecenas rhoncus, arcu et bibendum euismod, ipsum lacus congue sem, eget ornare arcu ex non ex. Cras ut purus vehicula, viverra risus a, faucibus massa. Sed eu lectus at nisl rutrum blandit. Nunc sed leo at velit fringilla dictum. Praesent sed molestie massa, eget tincidunt arcu. Suspendisse enim felis, euismod a lorem quis, volutpat mollis justo. Fusce vulputate dolor ut quam dignissim faucibus.',
-              ),
+              Text(widget.produit.description),
             ],
           ),
         ),

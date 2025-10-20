@@ -3,6 +3,9 @@ import '../components/my_drawer.dart';
 import '../class/produit.dart';
 import '../components/my_appbar.dart';
 import 'detail_page.dart';
+import '../services/networking.dart';
+
+const urlAPI = 'http://10.0.2.2/leafy/api';
 
 class HomePage extends StatefulWidget {
   const HomePage({super.key});
@@ -12,32 +15,33 @@ class HomePage extends StatefulWidget {
 }
 
 class _HomePageState extends State<HomePage> {
-  List<Produit> flowerList = [
-    Produit(
-      urlImg: "assets/images/bonsai.jpg",
-      name: "Bonsai",
-      price: 20.00,
-      description: "Petite plante",
-    ),
-    Produit(
-      urlImg: "assets/images/daisy.jpg",
-      name: "Daisy",
-      price: 15.00,
-      description: "Petite plante",
-    ),
-    Produit(
-      urlImg: "assets/images/rose.jpg",
-      name: "Rose",
-      price: 10.00,
-      description: "Petite plante",
-    ),
-    Produit(
-      urlImg: "assets/images/tulip.jpg",
-      name: "Tulip",
-      price: 15.00,
-      description: "Petite plante",
-    ),
-  ];
+  List<Produit> flowerList = [];
+  int numCategory = 0;
+
+  Future<void> getFlowerListForCategory(int categoryId) async {
+    final url = '$urlAPI/get_plantes.php?id_categorie=$categoryId';
+    NetworkHelper networkHelper = NetworkHelper(url);
+
+    var data = await networkHelper.getData();
+
+    if (data != null && data['plantes'] != null) {
+      List<dynamic> plantesJson = data['plantes'];
+
+      setState(() {
+        flowerList = plantesJson.map((json) => Produit.fromJson(json)).toList();
+      });
+    } else {
+      setState(() {
+        flowerList = [];
+      });
+    }
+  }
+
+  @override
+  void initState() {
+    super.initState();
+    getFlowerListForCategory(1);
+  }
 
   List<String> categoryList = [
     "Petite plante",
@@ -45,8 +49,6 @@ class _HomePageState extends State<HomePage> {
     "Terrarium",
     "Pot / Accessoire",
   ];
-
-  int numCategory = 0;
 
   @override
   Widget build(BuildContext context) {
@@ -58,8 +60,9 @@ class _HomePageState extends State<HomePage> {
       body: Column(
         children: [
           // Catégories horizontales
-          SizedBox(
+          Container(
             height: 70,
+            decoration: const BoxDecoration(color: Colors.teal),
             child: ListView.builder(
               scrollDirection: Axis.horizontal,
               itemCount: categoryList.length,
@@ -74,6 +77,9 @@ class _HomePageState extends State<HomePage> {
                       setState(() {
                         numCategory = index;
                       });
+                      getFlowerListForCategory(
+                        index + 1,
+                      ); // car index 0 = id_categorie 1
                     },
                     style: TextButton.styleFrom(
                       foregroundColor: Colors.white,
