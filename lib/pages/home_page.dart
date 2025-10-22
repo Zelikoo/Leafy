@@ -136,11 +136,16 @@ class _HomePageState extends State<HomePage> {
                             produit.name,
                             style: const TextStyle(
                               color: Colors.black,
-                              fontSize: 25,
-                              fontWeight: FontWeight.bold,
+                              fontSize: 20,
+                              fontWeight: FontWeight.w600,
                             ),
+                            maxLines: 1, // empêche le texte de dépasser
+                            overflow: TextOverflow
+                                .ellipsis, // ajoute "..." si trop long
+                            textAlign: TextAlign.start,
                           ),
                         ),
+
                         Padding(
                           padding: const EdgeInsets.fromLTRB(8, 0, 0, 8),
                           child: Text(

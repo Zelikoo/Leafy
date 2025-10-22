@@ -10,8 +10,9 @@ class MyAppBar extends StatelessWidget implements PreferredSizeWidget {
   Widget build(BuildContext context) {
     return AppBar(
       backgroundColor: const Color(0xfffaf2e4),
+
       title: Row(
-        mainAxisAlignment: MainAxisAlignment.start,
+        mainAxisAlignment: MainAxisAlignment.center,
         children: [
           Hero(
             tag: 'logo',
