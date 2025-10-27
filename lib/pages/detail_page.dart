@@ -1,6 +1,29 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_leafy/class/produit.dart';
 import '../components/my_appbar.dart';
+import 'dart:convert';
+import 'package:http/http.dart' as http;
+
+Future<void> insertPanier(int quantite, int id_produit, int id_client) async {
+  final url = Uri.parse('http://10.0.2.2/leafy/api/insert_panier.php');
+  final response = await http.post(
+    url,
+    headers: {'Content-Type': 'application/json'},
+
+    body: jsonEncode({
+      'quantite': quantite,
+      'id_produit': id_produit,
+      'id_client': id_client,
+    }),
+  );
+
+  final data = jsonDecode(response.body);
+  if (data['success']) {
+    print('Utilisateur inséré avec succès');
+  } else {
+    print('Erreur : ${data['error']}');
+  }
+}
 
 class DetailPage extends StatefulWidget {
   const DetailPage({super.key, required this.produit});
@@ -111,7 +134,11 @@ class _DetailPageState extends State<DetailPage> {
               ),
               const SizedBox(height: 10),
               ElevatedButton(
-                onPressed: () {},
+                onPressed: () {
+                  print(quantity);
+                  print(widget.produit.id);
+                  insertPanier(quantity, widget.produit.id, 1);
+                },
                 style: ElevatedButton.styleFrom(
                   backgroundColor: Colors.teal.shade400,
                   shape: RoundedRectangleBorder(

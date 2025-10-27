@@ -16,7 +16,7 @@ class FacebookAuthService {
         case LoginStatus.success:
           // Étape 2 : Récupère le token Facebook
           final AccessToken accessToken = result.accessToken!;
-          debugPrint('✅ Facebook Access Token: ${accessToken.token}');
+          debugPrint('✅ Facebook Access Token: ${accessToken.tokenString}');
 
           // Étape 3 : Optionnel — Récupère les infos de l’utilisateur
           final userData = await FacebookAuth.instance.getUserData(
@@ -25,7 +25,7 @@ class FacebookAuthService {
           debugPrint('👤 Facebook user data: $userData');
 
           // Étape 4 : Envoie le token au backend pour créer une session
-          await _sendTokenToBackend(accessToken.token);
+          await _sendTokenToBackend(accessToken.tokenString);
 
           return userData;
 

@@ -1,78 +1,58 @@
-import 'dart:convert';
 import 'package:flutter/material.dart';
+import 'package:flutter/foundation.dart';
 import 'package:google_sign_in/google_sign_in.dart';
-import 'package:http/http.dart' as http;
 
-/// Classe utilitaire pour gérer l'authentification Google
 class GoogleAuthService {
-  static final GoogleSignIn _googleSignIn = GoogleSignIn(
-    scopes: ['email', 'profile'],
-  );
+  final GoogleSignIn _googleSignIn = GoogleSignIn.instance;
 
-  /// 🔹 Connexion via Google
-  static Future<Map<String, dynamic>?> signInWithGoogle() async {
-    try {
-      // Ouvre la fenêtre de sélection de compte Google
-      final GoogleSignInAccount? account = await _googleSignIn.signIn();
+  bool _initialized = false;
 
-      if (account == null) {
-        debugPrint('Connexion annulée par l’utilisateur');
-        return null;
-      }
+  Future<void> initialize() async {
+    if (_initialized) return;
 
-      // Récupère le token d’authentification Google
-      final GoogleSignInAuthentication auth = await account.authentication;
-      final String? idToken = auth.idToken;
-
-      if (idToken == null) {
-        debugPrint('Impossible de récupérer le idToken Google');
-        return null;
-      }
-
-      // ✅ Envoi du token au backend pour vérification et récupération JWT
-      final backendResponse = await _sendTokenToBackend(idToken);
-
-      if (backendResponse != null) {
-        debugPrint('Authentification réussie ✅');
-        return backendResponse;
-      } else {
-        debugPrint('Erreur lors de l’authentification avec le backend ❌');
-        return null;
-      }
-    } catch (e) {
-      debugPrint('Erreur Google Sign-In : $e');
-      return null;
-    }
-  }
-
-  /// 🔸 Déconnexion Google
-  static Future<void> signOut() async {
-    await _googleSignIn.signOut();
-    debugPrint('Utilisateur déconnecté de Google');
-  }
-
-  /// 🔸 Envoi du token Google ID au backend
-  static Future<Map<String, dynamic>?> _sendTokenToBackend(
-    String idToken,
-  ) async {
-    try {
-      final response = await http.post(
-        Uri.parse(
-          'http://10.0.2.2:3000/api/auth/google',
-        ), // ⚠️ remplace avec ton URL backend
-        headers: {'Content-Type': 'application/json'},
-        body: jsonEncode({'token': idToken}),
+    if (defaultTargetPlatform == TargetPlatform.android) {
+      await _googleSignIn.initialize(
+        // Android n’a pas besoin de clientId
+        serverClientId:
+            "307123541227-kkp9tvjqb73a8ie22jcpkdbqegj22879.apps.googleusercontent.com",
       );
-
-      if (response.statusCode == 200) {
-        return jsonDecode(response.body);
-      } else {
-        debugPrint('Erreur backend: ${response.statusCode} - ${response.body}');
-        return null;
-      }
-    } catch (e) {
-      debugPrint('Erreur lors de l’envoi du token au backend: $e');
-      return null;
+    } else if (defaultTargetPlatform == TargetPlatform.iOS) {
+      await _googleSignIn.initialize();
+    } else if (kIsWeb) {
+      await _googleSignIn.initialize(
+        clientId:
+            "307123541227-kkp9tvjqb73a8ie22jcpkdbqegj22879.apps.googleusercontent.com",
+      );
     }
+
+    _initialized = true;
+  }
+
+  Future<GoogleSignInAccount?> signIn() async {
+    // S’assurer que tout est initialisé
+    if (!_initialized) {
+      await initialize();
+    }
+    // Pour les plateformes qui supportent `authenticate`
+    if (_googleSignIn.supportsAuthenticate()) {
+      return await _googleSignIn.authenticate();
+    } else {
+      // fallback pour les plateformes qui ne supportent pas `authenticate`
+      // (par exemple, web pourrait avoir son propre flow)
+      throw UnimplementedError(
+        'authenticate non supporté sur cette plateforme',
+      );
+    }
+  }
+
+  Future<void> signOut() async {
+    await _googleSignIn.signOut();
+  }
+
+  Future<GoogleSignInAccount?> trySilentSignIn() async {
+    if (!_initialized) {
+      await initialize();
+    }
+    return await _googleSignIn.attemptLightweightAuthentication();
   }
 }
