@@ -17,7 +17,7 @@ class Produit {
 
   factory Produit.fromJson(Map<String, dynamic> json) {
     return Produit(
-      id: _parseInt(json['id']),
+      id: _parseInt(json['id_produit']),
       name: json['nom_produit']?.toString() ?? '',
       urlImg: json['image_url']?.toString() ?? '',
       description: json['description']?.toString() ?? '',

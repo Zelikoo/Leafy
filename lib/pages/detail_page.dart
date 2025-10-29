@@ -2,26 +2,23 @@ import 'package:flutter/material.dart';
 import 'package:flutter_leafy/class/produit.dart';
 import '../components/my_appbar.dart';
 import 'dart:convert';
-import 'package:http/http.dart' as http;
+import '../services/networking.dart';
+
+const urlAPI = 'http://10.0.2.2/leafy/api';
 
 Future<void> insertPanier(int quantite, int id_produit, int id_client) async {
-  final url = Uri.parse('http://10.0.2.2/leafy/api/insert_panier.php');
-  final response = await http.post(
-    url,
-    headers: {'Content-Type': 'application/json'},
+  final url = '$urlAPI/panier.php';
+  final data = {
+    'quantite': quantite,
+    'id_produit': id_produit,
+    'id_client': id_client,
+  };
 
-    body: jsonEncode({
-      'quantite': quantite,
-      'id_produit': id_produit,
-      'id_client': id_client,
-    }),
-  );
-
-  final data = jsonDecode(response.body);
-  if (data['success']) {
-    print('Utilisateur inséré avec succès');
-  } else {
-    print('Erreur : ${data['error']}');
+  try {
+    NetworkHelper(url).postData(data);
+    print('Données envoyées avec succès');
+  } catch (e) {
+    print('Erreur lors de l\'envoi des données : $e');
   }
 }
 
@@ -138,6 +135,9 @@ class _DetailPageState extends State<DetailPage> {
                   print(quantity);
                   print(widget.produit.id);
                   insertPanier(quantity, widget.produit.id, 1);
+                  ScaffoldMessenger.of(context).showSnackBar(
+                    SnackBar(content: Text('Produit ajouté au panier 🛒')),
+                  );
                 },
                 style: ElevatedButton.styleFrom(
                   backgroundColor: Colors.teal.shade400,
