@@ -1,5 +1,5 @@
 class Produit {
-  final int id;
+  final int id_produit;
   final String name;
   final String urlImg;
   final String description;
@@ -7,7 +7,7 @@ class Produit {
   final int categoryId;
 
   Produit({
-    required this.id,
+    required this.id_produit,
     required this.name,
     required this.urlImg,
     required this.description,
@@ -17,7 +17,7 @@ class Produit {
 
   factory Produit.fromJson(Map<String, dynamic> json) {
     return Produit(
-      id: _parseInt(json['id_produit']),
+      id_produit: _parseInt(json['id_produit']),
       name: json['nom_produit']?.toString() ?? '',
       urlImg: json['image_url']?.toString() ?? '',
       description: json['description']?.toString() ?? '',

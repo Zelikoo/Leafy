@@ -71,10 +71,21 @@ class _PanierPageState extends State<PanierPage> {
             const SizedBox(height: 10),
             Expanded(
               child: panier.isEmpty
-                  ? const Center(
-                      child: Text(
-                        "Votre panier est vide.",
-                        style: TextStyle(fontSize: 18, color: Colors.grey),
+                  ? Center(
+                      child: Column(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        crossAxisAlignment: CrossAxisAlignment.center,
+                        children: [
+                          Icon(
+                            Icons.shopping_cart_outlined,
+                            size: 100,
+                            color: Colors.grey,
+                          ),
+                          Text(
+                            "Votre panier est vide.",
+                            style: TextStyle(fontSize: 18, color: Colors.grey),
+                          ),
+                        ],
                       ),
                     )
                   : ListView.builder(
@@ -82,6 +93,7 @@ class _PanierPageState extends State<PanierPage> {
                       itemBuilder: (context, index) {
                         var item = panier[index];
                         var produitJson = item['panier'];
+                        print(produitJson);
                         var produit = Produit.fromJson(produitJson);
                         int quantite = item['quantite'];
 
@@ -146,6 +158,7 @@ class _PanierPageState extends State<PanierPage> {
         setState(() {
           panier.removeAt(index);
         });
+        networkHelper.deleteProduitPanier(produit.id_produit);
       },
       child: Container(
         color: Colors.grey.shade100,
@@ -196,7 +209,7 @@ class _PanierPageState extends State<PanierPage> {
                       setState(() {
                         panier.removeAt(index);
                       });
-                      networkHelper.deleteProduitPanier(produit.id);
+                      networkHelper.deleteProduitPanier(produit.id_produit);
                     },
                     style: ElevatedButton.styleFrom(
                       backgroundColor: Colors.white,

@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_leafy/class/produit.dart';
 import '../components/my_appbar.dart';
-import 'dart:convert';
 import '../services/networking.dart';
 
 const urlAPI = 'http://10.0.2.2/leafy/api';
@@ -133,11 +132,12 @@ class _DetailPageState extends State<DetailPage> {
               ElevatedButton(
                 onPressed: () {
                   print(quantity);
-                  print(widget.produit.id);
-                  insertPanier(quantity, widget.produit.id, 1);
+                  print(widget.produit.id_produit);
+                  insertPanier(quantity, widget.produit.id_produit, 1);
                   ScaffoldMessenger.of(context).showSnackBar(
                     SnackBar(content: Text('Produit ajouté au panier 🛒')),
                   );
+                  Navigator.pop(context);
                 },
                 style: ElevatedButton.styleFrom(
                   backgroundColor: Colors.teal.shade400,
@@ -168,6 +168,7 @@ class _DetailPageState extends State<DetailPage> {
               ),
               const SizedBox(height: 10),
               Text(widget.produit.description),
+              Text(widget.produit.id_produit.toString()),
             ],
           ),
         ),

@@ -52,9 +52,14 @@ class NetworkHelper {
   Future<dynamic> deleteProduitPanier(int idProduit) async {
     try {
       final deleteUrl = Uri.parse('$url?id_produit=$idProduit');
-      final response = await http.delete(deleteUrl);
+      final response = await http.delete(
+        deleteUrl,
+        headers: {'Content-Type': 'application/json'},
+        body: jsonEncode({'id_produit': idProduit}),
+      );
 
       if (response.statusCode == 200) {
+        print(response.body);
         return jsonDecode(response.body);
       } else {
         print(
